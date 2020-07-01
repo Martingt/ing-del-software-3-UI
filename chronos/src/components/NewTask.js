@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Card,  CardText, FormGroup, Form, Input
+  Card,  CardText, FormGroup, Form, Input, Button
 } from 'reactstrap';
 import plusImage from '../resources/images/plus.png';
 import taskStyle from '../resources/styles/tasks.js';
@@ -29,6 +29,10 @@ class CreateTask extends Component {
     this.setState({taskCreationOpen: !this.state.taskCreationOpen});
   }
 
+  handleTitleChange = (title) =>{
+    this.setState({taskForm: {...this.state.taskForm, title:title }});
+  }
+
   cancelTaskCreation = () => {
     this.setState({taskForm:{title: "", description:"", state: ""}});
     this.toggleTaskCreation();
@@ -48,16 +52,31 @@ class CreateTask extends Component {
   createTaskFrom(){
 
     return (<Form style={{...taskStyle.taskCreationForm}}>
-        <FormGroup>
-          <div style={{...taskStyle.taskCreationFormTop}}>
-            <span style={{...taskStyle.taskCreationFormTitle}}>Crear tarea</span>
-            <CloseButton onClick={this.cancelTaskCreation}/>
-          </div>
+        <FormGroup style={{display:'flex',
+         flex:1, justifyContent:'space-between', flexDirection:'column'}}>
+          <div>
+            <div style={{...taskStyle.taskCreationFormTop}}>
+              <span style={{...taskStyle.taskCreationFormTitle}}>Crear tarea</span>
+              <CloseButton onClick={this.cancelTaskCreation}/>
+            </div>
 
-          <Input type="text"
+            <Input type="text"
+            onChange={(title)=>{this.handleTitleChange(title)}}
+            name="title"
+            id="taskTitle"
+            placeholder="Titulo de la tarea" />
+
+          <Input type="textarea"
+          style={{marginTop:10}}
+          onChange={(title)=>{this.handleTitleChange(title)}}
           name="title"
           id="taskTitle"
-          placeholder="Titulo de la tarea" />
+          placeholder="Descripcion de la tarea..." />
+          </div>
+
+          <div  style={{ display:'flex', justifyContent:'center'}}>
+            <Button> Crear </Button>
+          </div>
         </FormGroup>
       </Form>);
   }
