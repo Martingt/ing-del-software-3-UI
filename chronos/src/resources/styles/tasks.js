@@ -17,7 +17,10 @@ const taskStyle = {
     borderWidth:2
   },
   taskCreationForm: {
-    padding:10
+    padding:10,
+    display:'flex',
+    flex:1,
+    flexDirection:'column'
   },
   taskCreationFormTitle: {
     color: "#757575",
@@ -29,7 +32,7 @@ const taskStyle = {
     justifyContent:'space-between',
     display:'flex'
   },
-  
+
 
 }
 
