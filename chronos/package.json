@@ -13,7 +13,8 @@
     "bootstrap": "4.0.0",
     "jquery": "3.5.1",
     "popper.js": "1.14.3",
-    "reactstrap": "8.5.1"
+    "reactstrap": "8.5.1",
+    "express": "4.17.1"
   },
   "scripts": {
     "start": "react-scripts start",
