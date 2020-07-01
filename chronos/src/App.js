@@ -1,49 +1,44 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {
-  Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button
-} from 'reactstrap';
-
+import Config from './chronos.config.js';
+import Task from './components/Task.js';
+import TopBar from './components/TopBar.js';
+import { Container } from 'reactstrap';
+import CreateTask from './components/NewTask.js';
+const currentProfile = Config.currentProfile;
 
 class App extends Component {
   state = {
     tasks: []
   }
 
-  componentWillMount() {
-    axios.get('http://127.0.0.1:8000/chronos/',{
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-    },
-    
-    }).then((response) => {
+  componentDidMount() {
+    axios.get(Config[currentProfile].backendUrl+'tasks').then((response) => {
       this.setState({
         tasks: response.data
       })
     });
   }
 
-  
+
   render() {
+    let i = 0;
     let tasks = this.state.tasks.map((task) => {
-      return(
-      <Card>
-          <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />
-          <CardBody>
-            <CardTitle>Card title</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-            <Button>Button</Button>
-          </CardBody>
-        </Card>
-      )  
+      i += 1;
+      return (<Task  title={task.title} key={i} description={task.description} />)
     });
+
+
     console.log("tasks");
     return (
-      <div className="App container">
-        { tasks }
+      <div>
+      <TopBar />
+      <Container style={{'marginTop':'10px'}}>
+        <div style={{display:'flex', flexDirection:'row', flexWrap: 'wrap'}}>
+        {tasks}
+        <CreateTask />
+        </div>
+      </Container>
       </div>
     );
   }
