@@ -36,8 +36,8 @@ class Task extends Component {
       <Card style={{...taskStyle.task, 'maxWidth': maxWidth}}>
           <CardBody>
             <CardTitle>{this.state.title}</CardTitle>
+            <div style={{height:"1px", backgroundColor:"#eee", width:"100%"}}></div>
             <CardText>{this.state.description}</CardText>
-            <Button>Button</Button>
           </CardBody>
       </Card>
     )
