@@ -5,6 +5,7 @@ import Task from './components/Task.js';
 import TopBar from './components/TopBar.js';
 import { Container } from 'reactstrap';
 import CreateTask from './components/NewTask.js';
+import SearchBar from './components/SearchBar.js';
 const currentProfile = Config.currentProfile;
 
 class App extends Component {
@@ -34,6 +35,7 @@ class App extends Component {
       <div>
       <TopBar />
       <Container style={{'marginTop':'10px'}}>
+        <SearchBar />
         <div style={{display:'flex', flexDirection:'row', flexWrap: 'wrap'}}>
         {tasks}
         <CreateTask />

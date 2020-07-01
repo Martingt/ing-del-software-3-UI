@@ -5,7 +5,6 @@ import {
 } from 'reactstrap';
 import taskStyle from '../resources/styles/tasks.js';
 
-
 class Task extends Component {
 
 
