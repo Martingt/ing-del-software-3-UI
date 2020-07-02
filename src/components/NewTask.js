@@ -43,7 +43,7 @@ class CreateTask extends Component {
   }
 
   cancelTaskCreation = () => {
-    this.setState({taskForm:{title: "", description:"", state: ""}});
+    this.setState({taskForm:{title: "", description:"", state: "To Do"}, taskCreationTried: false});
     this.toggleTaskCreation();
   }
 
@@ -69,7 +69,20 @@ class CreateTask extends Component {
   }
 
   taskCreatedConfirmation(){
-    return (<div>La tarea se ha creado con exito :)</div>);
+    return (<div style={{flex:1, flexDirection:'column'}}>
+      <div style={{flex:1,
+        display:'flex',
+        justifyContent:'flex-end',
+        marginRight:10}}>
+        <CloseButton  onClick={this.cancelTaskCreation}/>
+      </div>
+      <div style={{flex:1,
+        display:'flex',
+        alignItems:'center',
+        justifyContent:'center',
+        flexDirection:'column'}}><span>La tarea se ha creado con exito :)</span>
+        <Button onClick={this.cancelTaskCreation}>Aceptar</Button></div>
+    </div>);
   }
 
   createTaskFrom(){
