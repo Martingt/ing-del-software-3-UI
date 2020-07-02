@@ -4,6 +4,7 @@ import {
   CardTitle, Button
 } from 'reactstrap';
 import taskStyle from '../resources/styles/tasks.js';
+import  '../resources/styles/task.css';
 
 class Task extends Component {
 
@@ -33,7 +34,7 @@ class Task extends Component {
 
     let maxWidth = (this.state.winWidth < 800)? '100%':this.state.winWidth*0.2;
     return(
-      <Card style={{...taskStyle.task, 'maxWidth': maxWidth}}>
+      <Card className="task" style={{'maxWidth': maxWidth}}>
           <CardBody>
             <CardTitle>{this.state.title}</CardTitle>
             <div style={{height:"1px", backgroundColor:"#eee", width:"100%"}}></div>

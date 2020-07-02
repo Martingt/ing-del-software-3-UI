@@ -4,6 +4,7 @@ import {
 } from 'reactstrap';
 import plusImage from '../resources/images/plus.png';
 import taskStyle from '../resources/styles/tasks.js';
+import '../resources/styles/task.css';
 import CloseButton from './elements/CloseButton.js';
 import axios from 'axios';
 import Config from '../chronos.config.js';
@@ -50,8 +51,14 @@ class CreateTask extends Component {
   createTask = () => {
     axios.post(Config[currentProfile].createTask, this.state.taskForm)
     .then((response) => {
+      console.log(response.status);
       this.setState({
-        creationResult: response.data,
+        creationResult: "La tarea se ha creado con exito :)",
+        taskCreationTried: true
+      })
+    }).catch(e => {
+      this.setState({
+        creationResult: "La tarea no pudo ser creada, intentelo de nuevo mas tarde.",
         taskCreationTried: true
       })
     });
@@ -80,7 +87,7 @@ class CreateTask extends Component {
         display:'flex',
         alignItems:'center',
         justifyContent:'center',
-        flexDirection:'column'}}><span>La tarea se ha creado con exito :)</span>
+        flexDirection:'column'}}><span>{this.state.creationResult}</span>
         <Button onClick={this.cancelTaskCreation}>Aceptar</Button></div>
     </div>);
   }
@@ -91,7 +98,7 @@ class CreateTask extends Component {
         <FormGroup style={{display:'flex',
          flex:1, justifyContent:'space-between', padding:10, flexDirection:'column'}}>
           <div>
-            <div style={{...taskStyle.taskCreationFormTop}}>
+            <div className="taskCreationFormTop" style={{...taskStyle.taskCreationFormTop}}>
               <span style={{...taskStyle.taskCreationFormTitle}}>Crear tarea</span>
               <CloseButton onClick={this.cancelTaskCreation}/>
             </div>
@@ -122,20 +129,20 @@ class CreateTask extends Component {
     let card = null;
     if (this.state.taskCreationOpen && !this.state.taskCreationTried){
       card = (
-        <Card style={{...taskStyle.task,...taskStyle.taskCreationCard, 'maxWidth': maxWidth}}>
+        <Card className="task taskCreationCard" style={{'maxWidth': maxWidth}}>
         {this.createTaskFrom()}
         </Card>);
     }
     else if (this.state.taskCreationOpen && this.state.taskCreationTried){
       card = (
-        <Card style={{...taskStyle.task,...taskStyle.taskCreationCard, 'maxWidth': maxWidth}}>
+        <Card className="task taskCreationCard" style={{'maxWidth': maxWidth}}>
         {this.taskCreatedConfirmation()}
         </Card>);
     }
     else {
       card = (
         <div><Card onClick={this.toggleTaskCreation}
-            style={{ ...taskStyle.task,...taskStyle.newTask, 'maxWidth': maxWidth}}>
+            className="task newTask" style={{'maxWidth': maxWidth}}>
           <img src={plusImage} height={25} alt="+" />
           <CardText style={{fontSize:'0.9rem', marginTop:10}}>
             Agregar Tarea

@@ -1,0 +1,20 @@
+.task {
+  min-width:300px;
+  min-height: 250px;
+  margin:5px;
+}
+.taskCreationCard {
+  background-color:#fafafa;
+  border-color:#f0f0f0;
+  border-width:2;
+}
+.newTask {
+  align-items:center;
+  justify-content:center;
+  background-color:#fafafa;
+  border-color:#f0f0f0;
+  border-width:2;
+}
+.taskCreationFormTop {
+  margin-bottom:8px;
+}
