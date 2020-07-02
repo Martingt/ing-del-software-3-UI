@@ -21,6 +21,9 @@ class App extends Component {
     });
   }
 
+  updateTasks = (tasks) => {
+    this.setState({tasks:tasks});
+  }
 
   render() {
     let i = 0;
@@ -35,7 +38,7 @@ class App extends Component {
       <div>
       <TopBar />
       <Container style={{'marginTop':'10px'}}>
-        <SearchBar />
+        <SearchBar onTaskSearch={this.updateTasks}/>
         <div style={{display:'flex', flexDirection:'row', flexWrap: 'wrap'}}>
         {tasks}
         <CreateTask />
