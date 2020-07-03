@@ -25,8 +25,9 @@ class App extends Component {
     });
   }
 
-  updateTasks = (tasks) => {
-    this.setState({tasks:tasks});
+  updateTasks = (data) => {
+    this.setState({tasks: []});
+    this.setState({tasks: data});
   }
 
   openOnTaskView = (code) => {
