@@ -1,9 +1,69 @@
 .chronometre {
   flex:1;
   display:flex;
+  align-items: center;
+  width:100%;
+  border-bottom:1px solid #f0f0f0;
+  flex-wrap:wrap;
+}
+
+.disabledButton{
+  background-color: #fff;
+  color: #aaa;
+  border: 1px solid;
+  border-color:#ddd;
+  font-size: 0.9rem;
+  border-radius:20px;
+  padding-left:10px;
+  padding-right:10px;
+  padding-top:6px;
+  padding-bottom:6px;
+  cursor:default;
+}
+
+.cButton:hover {
+  background-color: #fff;
+  color: #353535;
+  border-color:#888;
+}
+.endButton:hover {
+  border-color:red;
+}
+.startButton:hover {
+  border-color:green;
+}
+.tnumber {
+  display:inline-block;
+}
+
+.cButton {
+  background-color: #fff;
+  color: #353535;
+  border: 1px solid;
+  border-color:#ccc;
+  font-size: 0.9rem;
+  border-radius:20px;
+  padding-left:10px;
+  padding-right:10px;
+  padding-top:6px;
+  padding-bottom:6px;
+  cursor: pointer;
+}
+
+.timer {
+  flex:1;
+  display:flex;
   justify-content: center;
   align-items: center;
   height:100px;
   width:100%;
-  border-bottom:1px solid #f0f0f0;
+  min-width:300px;
+}
+.options {
+  flex:1;
+  display:flex;
+  justify-content: space-around;
+  align-items: center;
+  height:100px;
+  width:100%;
 }
