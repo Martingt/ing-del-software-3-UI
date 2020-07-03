@@ -24,7 +24,8 @@ class CreateTask extends Component {
       taskForm: {
         title: "",
         description: "",
-        state: "To Do"
+        state: "To Do",
+
       },
       taskCreationTried: false,
       creationResult: null,
@@ -54,6 +55,7 @@ class CreateTask extends Component {
   }
 
   createTask = () => {
+
     axios.post(Config[currentProfile].createTask, this.state.taskForm)
     .then((response) => {
       console.log(response.status);
@@ -67,6 +69,8 @@ class CreateTask extends Component {
         taskCreationTried: true
       })
     });
+
+    this.props.onCreation();
   }
 
   handleWindowResize(){

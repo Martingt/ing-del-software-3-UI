@@ -18,6 +18,10 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.loadTasks();
+  }
+
+  loadTasks = () => {
     axios.get(Config[currentProfile].backendUrl+'tasks').then((response) => {
       this.setState({
         tasks: response.data
@@ -45,7 +49,7 @@ class App extends Component {
       let tasks = this.state.tasks.map((task) => {
         return (<Task onClick={(code)=>this.openOnTaskView(code)}
             title={task.title} key={task.code} code={task.code}
-            description={task.description} 
+            description={task.description}
             state={task.state}/>)
       });
 
@@ -53,7 +57,7 @@ class App extends Component {
           <div>
             <SearchBar onTaskSearch={this.updateTasks}/>
             <div style={{display:'flex', flexDirection:'row', flexWrap: 'wrap'}}>
-            <CreateTask />
+            <CreateTask onCreation={this.loadTasks}/>
               {tasks}
             </div>
           </div>);

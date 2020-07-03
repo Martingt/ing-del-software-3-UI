@@ -8,7 +8,7 @@ import Config from '../chronos.config.js';
 const currentProfile = Config.currentProfile;
 
 
-export default class SearchBar extends Component{
+export default class SearchBar extends Component {
   constructor(props){
     super(props);
     this.state = {
