@@ -3,13 +3,11 @@ import {
   Card, CardText, CardBody,
   CardTitle, Button, Input
 } from 'reactstrap';
-import taskStyle from '../resources/styles/tasks.js';
 import  '../resources/styles/task.css';
 import clock from '../resources/images/clock.png';
 import edit from '../resources/images/edit.png';
 import add from '../resources/images/plus.png';
 class Task extends Component {
-
 
   constructor(props){
     super();
@@ -20,6 +18,10 @@ class Task extends Component {
       winWidth: window.innerWidth,
       winHeight: window.innerHeight
     }
+  }
+
+  onCardClick(event){
+    this.props.onClick(this.props.code);
   }
 
   handleWindowResize(){
@@ -33,13 +35,14 @@ class Task extends Component {
     window.addEventListener("resize", this.handleWindowResize.bind(this));
   }
 
+
   render(){
     let border;
     let totalTime = 42;
     this.state.state == 'To Do'? border='warning': this.state.state == 'In Progress'? border = 'danger': border = 'success';  ;
     let maxWidth = (this.state.winWidth < 800)? '100%':this.state.winWidth*0.2;
     return(
-      <Card className="task" outline style={{'maxWidth': maxWidth,...taskStyle.taskCard}} color={border}>
+      <Card onClick={(event)=>this.onCardClick(event)} className="task" style={{'maxWidth': maxWidth,...taskStyle.taskCard}} color={border}>
           <CardBody>
             <div style={{flex:1, flexDirection:'column', display:'flex',marginTop:15}}>
               <CardText style={{fontSize:'1.2rem',fontFamily:'AvenirNext-Regular'}}>{this.state.title}</CardText>
