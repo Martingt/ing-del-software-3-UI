@@ -31,7 +31,6 @@ export default class SearchBar extends Component {
     let baseUrl = Config[currentProfile].backendUrl+'tasks';
     let query = "?title=" + state.title + "&description=" +  state.description
             + "&state=" + state.state + "&code=" +  state.code;
-
     let queryUrl = baseUrl + query;
     axios.get(queryUrl).then((response) => {
         this.props.onTaskSearch(response.data);

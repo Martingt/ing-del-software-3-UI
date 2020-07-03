@@ -67,3 +67,7 @@
   height:100px;
   width:100%;
 }
+.titleContent {
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
