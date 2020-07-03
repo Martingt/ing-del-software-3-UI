@@ -20,10 +20,6 @@ const taskStyle = {
     fontFamily: 'AvenirNext-Regular',
     width: 250
   },
-  radioButton: {
-    fontFamily:'AvenirNext-Regular',
-    fontSize: 14
-  },
   buttonCreate: {
     backgroundColor:'#D4D4D4',
     border:'none',

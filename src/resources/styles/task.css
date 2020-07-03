@@ -23,14 +23,3 @@
   margin-left: 12px;
   margin-right: 16px;
 }
-.radioButtonsContainer{
-  margin-top: 8px;
-  display: flex;                 
-  align-items: center;
-  margin-bottom: 10px;
-}
-.radioButtons{
-  margin-left: 35px;
-  align-items: center;
-  justify-content: center;
-}

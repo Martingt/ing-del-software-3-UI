@@ -131,26 +131,6 @@ class CreateTask extends Component {
             </DropdownMenu>
           </ButtonDropdown>
           
-            <div className='radioButtonsContainer' style={{justifyContent:'center'}}>
-              <div className='radioButtons'>
-                <Label check style={{...taskStyle.radioButton}}>
-                  <Input type="radio" name="radio1" />
-                  To Do
-                </Label>
-              </div>
-              <div className='radioButtons'>
-                <Label check style={{...taskStyle.radioButton}} >
-                  <Input type="radio" name="radio1" />
-                  In Progress
-                </Label >
-              </div>
-              <div className='radioButtons'>
-                <Label check style={{...taskStyle.radioButton}}>
-                  <Input type="radio" name="radio1" />
-                  Done
-                </Label>
-              </div>
-            </div>
           </div>
 
           <div  style={{ display:'flex', justifyContent:'center'}}>
