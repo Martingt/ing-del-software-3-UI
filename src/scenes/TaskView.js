@@ -14,9 +14,9 @@ export default class TaskView extends Component {
 
     this.state = {
         code: '',
-        description: 'Sample description',
-        title: 'Sample Title',
-        state: 'Sample State',
+        description: '',
+        title: '',
+        state: '',
         timeIntervals: '',
         backImg: backLight,
         backActive: false,
