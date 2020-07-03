@@ -4,6 +4,9 @@
   margin:5px;
   cursor: pointer;
 }
+.task:hover {
+  border-color:#aaa;
+}
 .taskCreationCard {
   background-color:#fafafa;
   border-color:#f0f0f0;

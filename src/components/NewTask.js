@@ -100,7 +100,7 @@ class CreateTask extends Component {
     return (
         <FormGroup style={{display:'flex',
          flex:1, justifyContent:'space-between', padding:10, flexDirection:'column',paddingBottom:3}}>
-          
+
           <div className="taskCreationBody">
             <div className="taskCreationFormTop" style={{...taskStyle.taskCreationFormTop}}>
               <span style={{...taskStyle.taskCreationFormTitle}}></span>
@@ -119,7 +119,7 @@ class CreateTask extends Component {
               id="taskTitle"
               placeholder="Descripcion"
               style={{marginTop:10, fontFamily:'AvenirNext-Regular',border: 'none', resize:'none', height:110}} />
-          
+
           <ButtonDropdown
               isOpen={this.state.dropdownOpen} toggle={this.toggle}
               style={{marginTop:10}} block>
@@ -130,7 +130,7 @@ class CreateTask extends Component {
               <DropdownItem>No se encontraron proyectos</DropdownItem>
             </DropdownMenu>
           </ButtonDropdown>
-          
+
           </div>
 
           <div  style={{ display:'flex', justifyContent:'center'}}>
@@ -159,7 +159,7 @@ class CreateTask extends Component {
       card = (
         <div>
           <Card onClick={this.toggleTaskCreation}
-            className="task newTask" style={{'maxWidth': maxWidth, ...taskStyle.taskCard,marginRight:55}}>
+            className="task newTask" style={{'maxWidth': maxWidth, ...taskStyle.taskCard}}>
             <img src={plusImage} height={25} alt="+" />
             <CardText style={{fontSize:'0.9rem', marginTop:10, fontFamily: 'AvenirNext-Regular'}}>
               Nueva Tarea
