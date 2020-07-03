@@ -1,6 +1,6 @@
 .task {
-  min-width:300px;
   min-height: 250px;
+  width:300px;
   margin:5px;
   cursor: pointer;
 }

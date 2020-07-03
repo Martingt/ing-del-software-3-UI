@@ -44,9 +44,8 @@ class Task extends Component {
 
     color = this.state.state == 'To Do'? "#ffc107": this.state.state == 'In Progress'? 'red': 'green';
 
-    let maxWidth = (this.state.winWidth < 800)? '100%':this.state.winWidth*0.2;
     return(
-      <Card onClick={(event)=>this.onCardClick(event)} className="task" style={{'maxWidth': maxWidth,...taskStyle.taskCard}} >
+      <Card onClick={(event)=>this.onCardClick(event)} className="task" style={{...taskStyle.taskCard}} >
           <CardBody style={{flex:1, display:'flex', flexDirection:'column', justifyContent:'space-between'}}>
               <div style={{flex:1, display:'flex', flexDirection:'column'}}>
                 <div style={{ paddingTop:5, paddingBottom:10 }}>
