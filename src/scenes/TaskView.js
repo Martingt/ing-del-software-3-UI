@@ -145,32 +145,31 @@ export default class TaskView extends Component {
   }
 
   render(){
-
-    return (<div>
-      <div className="titleContent">
+    let color = this.state.state == 'To Do'? "warning": this.state.state == 'In Progress'? 'danger': 'success';
+    return (
+    <div>
+      <div className="titleContent" style={{display:'flex' ,flexDirection:'row', justifyContent:'flex-start',alignItems:'center',paddingTop: '5px', paddingBottom:'10px'}}>
           <div className="backButton"
             onMouseEnter={this.toggleBackImg}
             onMouseLeave={this.toggleBackImg}
-            onClick={this.props.onBackRequest()}>
+            onClick={this.props.onBackRequest()}
+            style={{alignItems:'center',justifyContent:'center',display:'inline-block'}}>
             <img src={this.state.backImg} height={14} />
           </div>
-          <p style={{fontFamily:'Avenir-Light',fontSize:'0.5rem'}}>Todas las tareas</p>
+          <p style={{fontFamily:'Avenir-Light',fontSize:'0.5rem',alignItems:'center',justifyContent:'center',display:'inline-block'}}>Todas las tareas</p>
       </div>
-      <div>
-        <p style={{fontFamily:'Avenir Next',fontSize:'2rem'}}>{this.state.title}</p>
+      <div style={{display:'flex' ,flexDirection:'row', justifyContent:'space-between',alignItems:'center'}}>
+        <p style={{fontFamily:'Avenir Next',fontSize:'2rem',alignItems:'center',justifyContent:'center',display:'inline-block'}}>{this.state.title}</p>
+        <Button color={color} style={{alignItems:'center',justifyContent:'center', display:'inline-block'}} >{this.state.state}</Button>
       </div>
         {this.displayChronometer()}
       <div>
-        <span>State:</span>
-        <h5>Descripcion</h5>
-        <span>{this.state.description}</span>
-
-        State: {this.state.state}
+        <p style={{fontFamily:'Avenir Next',fontSize:'1rem'}}>Descripcion</p>
+        <p style={{fontFamily:'Avenir Next',fontSize:'0.8rem'}}>{this.state.description}</p>
         Total time: {this.state.totalSeconds}
         <h5>Tiempo</h5>
         <span>Tiempo trabajado total {this.state.totalTime}</span>
         <span>Tiempo de trabajo total {this.state.workingTime}</span>
-
       </div>
     </div>);
   }

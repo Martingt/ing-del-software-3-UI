@@ -70,4 +70,8 @@
 .titleContent {
   padding-top: 5px;
   padding-bottom: 10px;
+  flex:1;
+  display:'inline-block';
+  justify-content: flex-start;
+  align-items: center;
 }
