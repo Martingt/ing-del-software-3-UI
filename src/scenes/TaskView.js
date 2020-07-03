@@ -37,7 +37,10 @@ export default class TaskView extends Component {
 
 
     axios.get(baseUrl).then((response) => {
-        this.setState({...response.data});
+      let seconds = Math.floor(response.data.totalTime % 60)
+      let hours = Math.floor(response.data.totalTime / 3600)
+      let minutes =  Math.floor(response.data.totalTime / 60)
+      this.setState({...response.data, seconds: seconds, minutes: minutes, hours: hours});
     });
 
   }
