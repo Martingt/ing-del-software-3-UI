@@ -27,18 +27,17 @@ export default class TaskView extends Component {
         seconds: 0,
         totalSeconds: 0,
         timerPaused:false,
-        tareaTerminada: false
+        tareaTerminada: false,
+        currentTr: -1
     }
   }
 
   componentDidMount(){
-    let baseUrl = Config[currentProfile].backendUrl+'tasks';
-    let query = "?code=" +  this.props.taskCode;
+    let baseUrl = Config[currentProfile].backendUrl+'tasks/'+this.props.taskCode;
 
-    let queryUrl = baseUrl + query;
 
-    axios.get(queryUrl).then((response) => {
-        this.setState({...response.data['0']});
+    axios.get(baseUrl).then((response) => {
+        this.setState({...response.data});
     });
 
   }
@@ -53,25 +52,71 @@ export default class TaskView extends Component {
   }
 
   endTask = () => {
+    let baseUrl = Config[currentProfile].backendUrl+"tasks/" +this.props.taskCode+"/stop";
+    let query = "?trcode="+this.state.currentTr;
+
+    axios.get(baseUrl+query).then((response) => {
+        console.log(response);
+    });
+
     this.setState({chronometreActive:false, tareaTerminada:true});
     clearInterval(this.timer);
   }
 
   pauseTimer =() => {
     if(this.state.chronometreActive){
+      let baseUrl = Config[currentProfile].backendUrl+"tasks/" +this.props.taskCode+"/pause";
+      let query = "?trcode="+this.state.currentTr;
+
+      axios.get(baseUrl+query).then((response) => {
+          console.log(response);
+      });
+
+
       clearInterval(this.timer);
       this.setState({timerPaused: true});
     }
   }
 
   playTimer = () =>{
+
     if(this.state.chronometreActive){
+      let today = new Date();
+      let dd = String(today.getDate()).padStart(2, '0');
+      let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      let yyyy = today.getFullYear();
+
+      let baseUrl = Config[currentProfile].backendUrl+"tasks/" +this.props.taskCode+"/resume";
+      let query = "?day="+dd+"&month="+mm+"&year="+yyyy;
+
+      let queryUrl = baseUrl + query;
+
+      axios.get(queryUrl).then((response) => {
+          this.setState({currentTr: response.data.tr_code});
+          console.log(response.datatr_code);
+      });
+
       this.activateTimer();
       this.setState({timerPaused: false});
     }
   }
 
   startTask = () =>{
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+
+    let baseUrl = Config[currentProfile].backendUrl+"tasks/" +this.props.taskCode+"/start";
+    let query = "?day="+dd+"&month="+mm+"&year="+yyyy;
+
+    let queryUrl = baseUrl + query;
+
+    axios.get(queryUrl).then((response) => {
+        this.setState({currentTr: response.data.tr_code});
+        console.log(response);
+    });
+
     this.activateTimer();
   }
 
@@ -145,6 +190,8 @@ export default class TaskView extends Component {
   }
 
   render(){
+    let color = (this.state.state === 'To Do')? "#fcc107":
+                (this.state.state === 'In Progress')? "#f06535":"green"
 
     return (<div>
       <div className="titleContent">
@@ -154,22 +201,27 @@ export default class TaskView extends Component {
             onClick={this.props.onBackRequest()}>
             <img src={this.state.backImg} height={14} />
           </div>
-          <p style={{fontFamily:'Avenir-Light',fontSize:'0.5rem'}}>Todas las tareas</p>
+          <span style={{fontFamily:'Avenir-Light'}}>Todas las tareas</span>
       </div>
       <div>
-        <p style={{fontFamily:'Avenir Next',fontSize:'2rem'}}>{this.state.title}</p>
+        <div style={{fontFamily:'Avenir Next', display:'flex', flex:1,
+        flexWrap:'wrap', justifyContent:'flex-start',alignItems:'center'}}>
+        <div style={{fontSize:'2rem', display:'flex',marginRight:'20px'}}>{this.state.title}</div>
+        <div style={{fontSize:'1rem', display:'flex',
+        border:"1px solid " +color,
+        color:color, borderRadius:20,
+        paddingLeft:10,paddingRight:10,
+        paddingTop:3, paddingBottom:3, alignItems:'center'}}>{this.state.state}</div>
+        </div>
       </div>
         {this.displayChronometer()}
       <div>
-        <span>State:</span>
         <h5>Descripcion</h5>
         <span>{this.state.description}</span>
 
-        State: {this.state.state}
-        Total time: {this.state.totalSeconds}
         <h5>Tiempo</h5>
-        <span>Tiempo trabajado total {this.state.totalTime}</span>
-        <span>Tiempo de trabajo total {this.state.workingTime}</span>
+        <div>Tiempo total: {this.state.totalTime}</div>
+        <div>Tiempo de trabajo total: {this.state.workingTime}</div>
 
       </div>
     </div>);

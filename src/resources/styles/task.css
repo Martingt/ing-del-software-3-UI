@@ -26,3 +26,24 @@
   margin-left: 12px;
   margin-right: 16px;
 }
+
+.toDo {
+  border-color:#fcc107;
+}
+
+.inProgress {
+  border-color:#ff7535;
+}
+.inProgress:hover {
+  border-color:#f00000;
+}
+
+.done {
+  border-color:#00d000;
+}
+.done:hover {
+  border-color:#009000;
+}
+.toDo:hover {
+  border-color:#ffa130;
+}

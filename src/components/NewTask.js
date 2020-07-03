@@ -122,18 +122,7 @@ class CreateTask extends Component {
               name="description"
               id="taskTitle"
               placeholder="Descripcion"
-              style={{marginTop:10, fontFamily:'AvenirNext-Regular',border: 'none', resize:'none', height:110}} />
-
-          <ButtonDropdown
-              isOpen={this.state.dropdownOpen} toggle={this.toggle}
-              style={{marginTop:10}} block>
-            <DropdownToggle caret style={{...taskStyle.projectDisplay}}>
-              Proyectos
-            </DropdownToggle>
-            <DropdownMenu style={{...taskStyle.projectDisplay}}>
-              <DropdownItem>No se encontraron proyectos</DropdownItem>
-            </DropdownMenu>
-          </ButtonDropdown>
+              style={{marginTop:10, fontFamily:'AvenirNext-Regular',border: 'none', resize:'none', height:'100%'}} />
 
           </div>
 
@@ -145,17 +134,16 @@ class CreateTask extends Component {
 
   render(){
 
-    let maxWidth = (this.state.winWidth < 1000)? this.state.winWidth*0.5 :this.state.winWidth*0.2;
     let card = null;
     if (this.state.taskCreationOpen && !this.state.taskCreationTried){
       card = (
-        <Card className="task taskCreationCard" style={{'maxWidth': maxWidth, ...taskStyle.taskCard}}>
+        <Card className="task taskCreationCard" style={{...taskStyle.taskCard, cursor:'default'}}>
         {this.createTaskFrom()}
         </Card>);
     }
     else if (this.state.taskCreationOpen && this.state.taskCreationTried){
       card = (
-        <Card className="task taskCreationCard" style={{'maxWidth': maxWidth, ...taskStyle.taskCard}}>
+        <Card className="task taskCreationCard" style={{...taskStyle.taskCard, cursor:'default'}}>
         {this.taskCreatedConfirmation()}
         </Card>);
     }
@@ -163,9 +151,9 @@ class CreateTask extends Component {
       card = (
         <div>
           <Card onClick={this.toggleTaskCreation}
-            className="task newTask" style={{'maxWidth': maxWidth, ...taskStyle.taskCard}}>
+            className="task newTask" style={{...taskStyle.taskCard}}>
             <img src={plusImage} height={25} alt="+" />
-            <CardText style={{fontSize:'0.9rem', marginTop:10, fontFamily: 'AvenirNext-Regular'}}>
+            <CardText style={{fontSize:'0.9rem', marginTop:10, cursor:'default', fontFamily: 'AvenirNext-Regular'}}>
               Nueva Tarea
             </CardText>
           </Card>

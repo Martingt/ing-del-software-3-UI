@@ -38,17 +38,15 @@ class Task extends Component {
 
 
   render(){
-    let color;
-    let maxWidth = (this.state.winWidth < 1000)? this.state.winWidth*0.5 :this.state.winWidth*0.2;
 
-
-    color = this.state.state == 'To Do'? "#ffc107": this.state.state == 'In Progress'? 'red': 'green';
-    let border = this.state.state == 'To Do'? "warning": this.state.state == 'In Progress'? 'danger': 'success';
+    let color = this.state.state == 'To Do'? "#fcc107": this.state.state == 'In Progress'? 'red': 'green';
+    let cardType = this.state.state == 'To Do'? "toDo": this.state.state == 'In Progress'? 'inProgress': 'done';
+    let cardStyle = "task " + cardType;
     return(
-      <Card outline onClick={(event)=>this.onCardClick(event)} className="task" style={{'maxWidth': maxWidth,...taskStyle.taskCard}} color={border} >
+      <Card  onClick={(event)=>this.onCardClick(event)} className={cardStyle} style={{...taskStyle.taskCard}}  >
           <CardBody style={{flex:1, display:'flex', flexDirection:'column', justifyContent:'space-between'}}>
               <div style={{flex:1, display:'flex', flexDirection:'column'}}>
-                <div style={{ paddingTop:5, paddingBottom:10,height:70 }}>
+                <div style={{ paddingTop:5, paddingBottom:10 }}>
                   <CardText style={{fontSize:'1.1rem',fontFamily:'AvenirNext-Regular'}}>{
                     (this.state.title.length > 50)?
                     this.state.title.slice(0,50) + "...":

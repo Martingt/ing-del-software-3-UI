@@ -17,7 +17,7 @@ export default class SearchBar extends Component {
       title: '',
       description: '',
       code: '',
-      state: ''
+      state: 'To Do'
     }
   }
 

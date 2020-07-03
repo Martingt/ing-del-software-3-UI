@@ -9,7 +9,9 @@
 }
 .titleContent {
   display:flex;
-  flex:1
+  flex:1;
+  justify-content: 'flex-start';
+  align-items:center;
 }
 
 .backButton{
