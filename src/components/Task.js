@@ -40,12 +40,12 @@ class Task extends Component {
 
   render(){
     let color;
-
+    let maxWidth = (this.state.winWidth < 800)? '90%':this.state.winWidth*0.2;
 
     color = this.state.state == 'To Do'? "#ffc107": this.state.state == 'In Progress'? 'red': 'green';
-
+    let border = this.state.state == 'To Do'? "warning": this.state.state == 'In Progress'? 'danger': 'success';
     return(
-      <Card onClick={(event)=>this.onCardClick(event)} className="task" style={{...taskStyle.taskCard}} >
+      <Card outline onClick={(event)=>this.onCardClick(event)} className="task" style={{'maxWidth': maxWidth,...taskStyle.taskCard}} color={border} >
           <CardBody style={{flex:1, display:'flex', flexDirection:'column', justifyContent:'space-between'}}>
               <div style={{flex:1, display:'flex', flexDirection:'column'}}>
                 <div style={{ paddingTop:5, paddingBottom:10 }}>
