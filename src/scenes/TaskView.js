@@ -33,17 +33,24 @@ export default class TaskView extends Component {
   }
 
   componentDidMount(){
+    this.updateTaskInfo();
+
+  }
+
+  updateTaskInfo = () =>{
     let baseUrl = Config[currentProfile].backendUrl+'tasks/'+this.props.taskCode;
-
-
     axios.get(baseUrl).then((response) => {
       let seconds = Math.floor(response.data.totalTime % 60)
       let hours = Math.floor(response.data.totalTime / 3600)
       let minutes =  Math.floor(response.data.totalTime / 60)
       this.setState({...response.data, seconds: seconds, minutes: minutes, hours: hours});
-    });
 
+      if (response.data.state === 'In Progress' && this.state.currentTr === -1){
+        this.setState({chronometreActive:true});
+      }
+    });
   }
+
 
   toggleBackImg = () =>{
     if (this.state.backActive){
@@ -60,7 +67,9 @@ export default class TaskView extends Component {
 
     axios.get(baseUrl+query).then((response) => {
         console.log(response);
+        this.updateTaskInfo();
     });
+
 
     this.setState({chronometreActive:false, tareaTerminada:true});
     clearInterval(this.timer);
@@ -73,8 +82,8 @@ export default class TaskView extends Component {
 
       axios.get(baseUrl+query).then((response) => {
           console.log(response);
+          this.updateTaskInfo();
       });
-
 
       clearInterval(this.timer);
       this.setState({timerPaused: true});
@@ -83,7 +92,7 @@ export default class TaskView extends Component {
 
   playTimer = () =>{
 
-    if(this.state.chronometreActive){
+    if(this.state.chronometreActive ){
       let today = new Date();
       let dd = String(today.getDate()).padStart(2, '0');
       let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -96,7 +105,6 @@ export default class TaskView extends Component {
 
       axios.get(queryUrl).then((response) => {
           this.setState({currentTr: response.data.tr_code});
-          console.log(response.datatr_code);
       });
 
       this.activateTimer();
@@ -147,10 +155,11 @@ export default class TaskView extends Component {
   displayChronometer = (taskConrtrols) =>{
 
     let taskControls = null;
-    if (this.state.tareaComenzada && this.state.tareaTerminada){
+    if ((this.state.tareaComenzada && this.state.tareaTerminada) || (this.state.state === 'Done')){
       taskControls = (<span>Tarea finalizada con exito. </span>);
     }
-    else if (this.state.tareaComenzada && !this.state.tareaTerminada){
+    else if ((this.state.tareaComenzada && !this.state.tareaTerminada)||
+          (this.state.state === 'In Progress')){
       taskControls = (<Button className="cButton"
         onClick={this.endTask}
         style={{minWidth:'124px'}}> Finalizar Tarea</Button>)
@@ -180,9 +189,12 @@ export default class TaskView extends Component {
 
 
       <Col className='options'>
-      { (this.state.timerPaused)?
+      { (this.state.timerPaused || (this.state.state === "In Progress" && this.state.currentTr === -1))?
             (<span
-              className={(this.state.chronometreActive)? "cButton" : "disabledButton"}
+              className={
+                (this.state.timerPaused ||
+                    (this.state.state === "In Progress" && this.state.currentTr === -1))?
+               "cButton" : "disabledButton"}
               onClick={this.playTimer}>Continuar</span>):
             (<span
               className={(this.state.chronometreActive)? "cButton" : "disabledButton"}
@@ -223,8 +235,9 @@ export default class TaskView extends Component {
         <span>{this.state.description}</span>
 
         <h5>Tiempo</h5>
-        <div>Tiempo total: {this.state.totalTime}</div>
-        <div>Tiempo de trabajo total: {this.state.workingTime}</div>
+        <div>Tiempo total: {Math.round(this.state.totalTime)} segundos. </div>
+        <div>Tiempo de trabajo total: {Math.round(this.state.workingTime)} segundos. </div>
+        <div>Tiempo de descanso total: {Math.round(this.state.totalTime-this.state.workingTime)} segundos. </div>
 
       </div>
     </div>);

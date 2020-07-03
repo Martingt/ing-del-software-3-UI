@@ -58,7 +58,7 @@ class App extends Component {
           <div>
             <SearchBar onTaskSearch={this.updateTasks}/>
             <div style={{display:'flex', flexDirection:'row', flexWrap: 'wrap'}}>
-            <CreateTask onCreation={this.loadTasks}/>
+            <CreateTask onCreation={()=>this.loadTasks()}/>
               {tasks}
             </div>
           </div>);
