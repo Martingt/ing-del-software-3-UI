@@ -45,15 +45,16 @@ class App extends Component {
       let tasks = this.state.tasks.map((task) => {
         return (<Task onClick={(code)=>this.openOnTaskView(code)}
             title={task.title} key={task.code} code={task.code}
-            description={task.description} />)
+            description={task.description} 
+            state={task.state}/>)
       });
 
       content = (
           <div>
             <SearchBar onTaskSearch={this.updateTasks}/>
             <div style={{display:'flex', flexDirection:'row', flexWrap: 'wrap'}}>
+            <CreateTask />
               {tasks}
-              <CreateTask />
             </div>
           </div>);
     }
