@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import {
   Card, CardText, CardBody,
-  CardTitle, Button
+  CardTitle
 } from 'reactstrap';
-import taskStyle from '../resources/styles/tasks.js';
 import  '../resources/styles/task.css';
 
 class Task extends Component {
-
 
   constructor(props){
     super();
@@ -17,6 +15,10 @@ class Task extends Component {
       winWidth: window.innerWidth,
       winHeight: window.innerHeight
     }
+  }
+
+  onCardClick(event){
+    this.props.onClick(this.props.code);
   }
 
   handleWindowResize(){
@@ -30,11 +32,12 @@ class Task extends Component {
     window.addEventListener("resize", this.handleWindowResize.bind(this));
   }
 
+
   render(){
 
     let maxWidth = (this.state.winWidth < 800)? '100%':this.state.winWidth*0.2;
     return(
-      <Card className="task" style={{'maxWidth': maxWidth}}>
+      <Card onClick={(event)=>this.onCardClick(event)} className="task" style={{'maxWidth': maxWidth}}>
           <CardBody>
             <CardTitle>{this.state.title}</CardTitle>
             <div style={{height:"1px", backgroundColor:"#eee", width:"100%"}}></div>

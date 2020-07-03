@@ -28,7 +28,6 @@ export default class SearchBar extends Component{
   }
 
   doSearch = (state) => {
-    let dirt = 0;
     let baseUrl = Config[currentProfile].backendUrl+'tasks';
     let query = "?title=" + state.title + "&description=" +  state.description
             + "&state=" + state.state + "&code=" +  state.code;

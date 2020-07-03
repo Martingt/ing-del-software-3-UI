@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Card,  CardText, FormGroup, Form, Input, Button
+  Card,  CardText, FormGroup, Input, Button
 } from 'reactstrap';
 import plusImage from '../resources/images/plus.png';
 import taskStyle from '../resources/styles/tasks.js';

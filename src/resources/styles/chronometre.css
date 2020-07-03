@@ -1,0 +1,9 @@
+.chronometre {
+  flex:1;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  height:100px;
+  width:100%;
+  border-bottom:1px solid #f0f0f0;
+}
