@@ -62,7 +62,7 @@ class Task extends Component {
                           alignItems:'center',
                           justifyContent:'center',
                           display:'inline-block'}}>
-                          <span>{this.state.totalTime} h</span>
+                          <span>Task {this.props.code}</span>
                       </span>
                   </div>
                   <div style={{fontFamily:'AvenirNext-Regular', display:'flex',
