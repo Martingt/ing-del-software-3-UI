@@ -14,9 +14,9 @@ export default class TaskView extends Component {
 
     this.state = {
         code: '',
-        description: '',
-        title: '',
-        state: '',
+        description: 'Sample description',
+        title: 'Sample Title',
+        state: 'Sample State',
         timeIntervals: '',
         backImg: backLight,
         backActive: false,
@@ -149,20 +149,21 @@ export default class TaskView extends Component {
     return (<div>
       <div className="titleContent">
           <div className="backButton"
-          onMouseEnter={this.toggleBackImg}
-          onMouseLeave={this.toggleBackImg}
-          onClick={this.props.onBackRequest()} ><img
-          src={this.state.backImg}
-          height={14}  /></div>
-          <h4 className='title'>{this.state.title}</h4>
+            onMouseEnter={this.toggleBackImg}
+            onMouseLeave={this.toggleBackImg}
+            onClick={this.props.onBackRequest()}>
+            <img src={this.state.backImg} height={14} />
+          </div>
+          <p style={{fontFamily:'Avenir-Light',fontSize:'0.5rem'}}>Todas las tareas</p>
       </div>
-      <div className='division' />
-      <span>cronometro</span>
+      <div>
+        <p style={{fontFamily:'Avenir Next',fontSize:'2rem'}}>{this.state.title}</p>
+      </div>
         {this.displayChronometer()}
       <div>
         <span>State:</span>
         <h5>Descripcion</h5>
-        <span>{this.state.description}></span>
+        <span>{this.state.description}</span>
 
         State: {this.state.state}
         Total time: {this.state.totalSeconds}

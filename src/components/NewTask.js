@@ -141,7 +141,7 @@ class CreateTask extends Component {
 
   render(){
 
-    let maxWidth = (this.state.winWidth < 800)? '90%':this.state.winWidth*0.2;
+    let maxWidth = (this.state.winWidth < 1000)? this.state.winWidth*0.5 :this.state.winWidth*0.2;
     let card = null;
     if (this.state.taskCreationOpen && !this.state.taskCreationTried){
       card = (
