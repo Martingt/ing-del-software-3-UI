@@ -1,6 +1,6 @@
 
 const Config = {
-  currentProfile: "localDev",
+  currentProfile: "cloud",
   localDev: {
     backendUrl:"http://127.0.0.1:8000/",
     resources:"http://127.0.0.1:3000/resources/",

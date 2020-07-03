@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import {
-  Card,  CardText, FormGroup, Form, Input, Button
+  Card,  CardText, FormGroup, Form, Input, Button,ButtonDropdown,DropdownToggle,DropdownItem, DropdownMenu, Label, ButtonGroup
 } from 'reactstrap';
 import plusImage from '../resources/images/plus.png';
 import taskStyle from '../resources/styles/tasks.js';
@@ -27,9 +27,14 @@ class CreateTask extends Component {
         state: "To Do"
       },
       taskCreationTried: false,
-      creationResult: null
+      creationResult: null,
+      dropdownOpen: false,
     }
   }
+
+  toggle = () => {
+    this.setState({...this.state, dropdownOpen: !this.state.dropdownOpen })
+  };
 
   toggleTaskCreation = () =>{
     this.setState({taskCreationOpen: !this.state.taskCreationOpen});
@@ -79,8 +84,7 @@ class CreateTask extends Component {
     return (<div style={{flex:1, flexDirection:'column'}}>
       <div style={{flex:1,
         display:'flex',
-        justifyContent:'flex-end',
-        marginRight:10}}>
+        justifyContent:'flex-end'}}>
         <CloseButton  onClick={this.cancelTaskCreation}/>
       </div>
       <div style={{flex:1,
@@ -93,61 +97,95 @@ class CreateTask extends Component {
   }
 
   createTaskFrom(){
-
     return (
         <FormGroup style={{display:'flex',
-         flex:1, justifyContent:'space-between', padding:10, flexDirection:'column'}}>
-          <div>
+         flex:1, justifyContent:'space-between', padding:10, flexDirection:'column',paddingBottom:3}}>
+          
+          <div className="taskCreationBody">
             <div className="taskCreationFormTop" style={{...taskStyle.taskCreationFormTop}}>
-              <span style={{...taskStyle.taskCreationFormTitle}}>Crear tarea</span>
+              <span style={{...taskStyle.taskCreationFormTitle}}></span>
               <CloseButton onClick={this.cancelTaskCreation}/>
             </div>
-
             <Input type="text"
-            onChange={(title)=>{this.handleTitleChange(title)}}
-            name="title"
-            id="taskTitle"
-            placeholder="Titulo de la tarea" />
+              onChange={(title)=>{this.handleTitleChange(title)}}
+              name="title"
+              id="taskTitle"
+              placeholder="Nombre de la tarea"
+              style={{fontFamily:'AvenirNext-Regular', border: 'none', borderRadius:0, height:26}}/>
 
-          <Input type="textarea"
-          style={{marginTop:10}}
-          onChange={(desc)=>{this.handleDescriptionChange(desc)}}
-          name="description"
-          id="taskTitle"
-          placeholder="Descripcion de la tarea..." />
+            <Input type="textarea"
+              onChange={(desc)=>{this.handleDescriptionChange(desc)}}
+              name="description"
+              id="taskTitle"
+              placeholder="Descripcion"
+              style={{marginTop:10, fontFamily:'AvenirNext-Regular',border: 'none', resize:'none', height:110}} />
+          
+          <ButtonDropdown
+              isOpen={this.state.dropdownOpen} toggle={this.toggle}
+              style={{marginTop:10}} block>
+            <DropdownToggle caret style={{...taskStyle.projectDisplay}}>
+              Proyectos
+            </DropdownToggle>
+            <DropdownMenu style={{...taskStyle.projectDisplay}}>
+              <DropdownItem>No se encontraron proyectos</DropdownItem>
+            </DropdownMenu>
+          </ButtonDropdown>
+          
+            <div className='radioButtonsContainer' style={{justifyContent:'center'}}>
+              <div className='radioButtons'>
+                <Label check style={{...taskStyle.radioButton}}>
+                  <Input type="radio" name="radio1" />
+                  To Do
+                </Label>
+              </div>
+              <div className='radioButtons'>
+                <Label check style={{...taskStyle.radioButton}} >
+                  <Input type="radio" name="radio1" />
+                  In Progress
+                </Label >
+              </div>
+              <div className='radioButtons'>
+                <Label check style={{...taskStyle.radioButton}}>
+                  <Input type="radio" name="radio1" />
+                  Done
+                </Label>
+              </div>
+            </div>
           </div>
 
           <div  style={{ display:'flex', justifyContent:'center'}}>
-            <Button onClick={this.createTask}> Crear </Button>
+            <Button size='sm' onClick={this.createTask} style={{...taskStyle.buttonCreate}}> Crear </Button>
           </div>
         </FormGroup>);
   }
 
   render(){
 
-    let maxWidth = (this.state.winWidth < 800)? '100%':this.state.winWidth*0.2;
+    let maxWidth = (this.state.winWidth < 800)? '90%':this.state.winWidth*0.2;
     let card = null;
     if (this.state.taskCreationOpen && !this.state.taskCreationTried){
       card = (
-        <Card className="task taskCreationCard" style={{'maxWidth': maxWidth}}>
+        <Card className="task taskCreationCard" style={{'maxWidth': maxWidth, ...taskStyle.taskCard}}>
         {this.createTaskFrom()}
         </Card>);
     }
     else if (this.state.taskCreationOpen && this.state.taskCreationTried){
       card = (
-        <Card className="task taskCreationCard" style={{'maxWidth': maxWidth}}>
+        <Card className="task taskCreationCard" style={{'maxWidth': maxWidth, ...taskStyle.taskCard}}>
         {this.taskCreatedConfirmation()}
         </Card>);
     }
     else {
       card = (
-        <div><Card onClick={this.toggleTaskCreation}
-            className="task newTask" style={{'maxWidth': maxWidth}}>
-          <img src={plusImage} height={25} alt="+" />
-          <CardText style={{fontSize:'0.9rem', marginTop:10}}>
-            Agregar Tarea
-          </CardText>
-      </Card></div>);
+        <div>
+          <Card onClick={this.toggleTaskCreation}
+            className="task newTask" style={{'maxWidth': maxWidth, ...taskStyle.taskCard,marginRight:55}}>
+            <img src={plusImage} height={25} alt="+" />
+            <CardText style={{fontSize:'0.9rem', marginTop:10, fontFamily: 'AvenirNext-Regular'}}>
+              Nueva Tarea
+            </CardText>
+          </Card>
+      </div>);
     }
 
     return card;

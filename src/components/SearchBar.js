@@ -3,6 +3,9 @@
 import React, { Component } from 'react';
 import {Input, Row, Col  } from 'reactstrap';
 import '../resources/styles/searchBar.css';
+import axios from 'axios';
+import Config from '../chronos.config.js';
+const currentProfile = Config.currentProfile;
 
 
 export default class SearchBar extends Component{
@@ -10,9 +13,31 @@ export default class SearchBar extends Component{
     super(props);
     this.state = {
       searchActive: false,
-      titleColor: "#aaa"
+      titleColor: "#aaa",
+      title: '',
+      description: '',
+      code: '',
+      state: ''
     }
   }
+
+  updateInput = (event) => {
+    let newState = {...this.state, [event.target.name]: event.target.value};
+    this.setState({[event.target.name]: event.target.value});
+    this.doSearch(newState);
+  }
+
+  doSearch = (state) => {
+    let baseUrl = Config[currentProfile].backendUrl+'tasks';
+    let query = "?title=" + state.title + "&description=" +  state.description
+            + "&state=" + state.state + "&code=" +  state.code;
+
+    let queryUrl = baseUrl + query;
+    axios.get(queryUrl).then((response) => {
+        this.props.onTaskSearch(response.data);
+    });
+  }
+
 
   activateSearch = () =>{
     this.setState({searchActive: !this.state.searchActive});
@@ -39,15 +64,19 @@ export default class SearchBar extends Component{
             <Row>
               <Col>
                <Input className="searchInput titleInput"
-               type="text" name="titleSearch" id="titleSearch"
-                placeholder="Buscar por titulo" /></Col>
+                type="text" name="title" id="titleSearch"
+                placeholder="Buscar por titulo"
+                onChange={(event)=>this.updateInput(event)} /></Col>
                <Col style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                  <Input className="searchInput idInput"
-                  type="text" name="idSearch" id="idSearch"
-                  placeholder="Buscar por id de tarea" />
+                  type="text" name="code" id="idSearch"
+                  placeholder="Buscar por id de tarea"
+                  onChange={(event)=>this.updateInput(event)}
+                  />
 
-                  <Input type='select' name='selectState'
-                      className='searchInput stateSelector'>
+                  <Input type='select' name='state'
+                      className='searchInput stateSelector'
+                      onChange={(event)=>this.updateInput(event)}>
                   <option>To Do</option>
                   <option>In Progress</option>
                   <option>Done</option>
@@ -56,10 +85,11 @@ export default class SearchBar extends Component{
               </Row>
               <Row>
                 <Col>
-                 <Input className="searchInput descInput" type="text"
-                   name="title"
+                 <Input className="searchInput description" type="text"
+                   name="description"
                    id="descriptionSearch"
-                   placeholder="Buscar por descripcion" /></Col>
+                   placeholder="Buscar por descripcion"
+                   onChange={(event)=>this.updateInput(event)}/></Col>
               </Row>
 
            </div>)
