@@ -23,13 +23,13 @@ class App extends Component {
 
 
   render() {
+    /*
     let i = 0;
     let tasks = this.state.tasks.map((task) => {
       i += 1;
       return (<Task  title={task.title} key={i} description={task.description} />)
     });
-
-
+    */
     console.log("tasks");
     return (
       <div>
@@ -37,8 +37,9 @@ class App extends Component {
       <Container style={{'marginTop':'10px'}}>
         <SearchBar />
         <div style={{display:'flex', flexDirection:'row', flexWrap: 'wrap'}}>
-        {tasks}
-        <CreateTask />
+          <CreateTask />
+          <Task title={'Facturar horas'} description={'Esta es la descripcion de la tarea, en esta descripcion encontraras mucha informacion sobre lo que estas trabajando. Por ejemplo, historias de usuario o criterios de aceptacion'} state={'In Progress'}/>
+          <Task title={'Prueba de ERP'} description={'Esta es la descripcion'} state={'To Do'}/>
         </div>
       </Container>
       </div>
