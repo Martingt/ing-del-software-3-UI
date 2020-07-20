@@ -17,7 +17,7 @@ export default class SearchBar extends Component {
       title: '',
       description: '',
       code: '',
-      state: 'To Do'
+      state: 'Estado'
     }
   }
 
@@ -30,7 +30,8 @@ export default class SearchBar extends Component {
   doSearch = (state) => {
     let baseUrl = Config[currentProfile].backendUrl+'tasks';
     let query = "?title=" + state.title + "&description=" +  state.description
-            + "&state=" + state.state + "&code=" +  state.code;
+            + "&code=" +  state.code;
+    if(this.state.state !== "Estado") query = query + "&state=" + this.state.state;
     let queryUrl = baseUrl + query;
     axios.get(queryUrl).then((response) => {
         this.props.onTaskSearch(response.data);
@@ -76,6 +77,7 @@ export default class SearchBar extends Component {
                   <Input type='select' name='state'
                       className='searchInput stateSelector'
                       onChange={(event)=>this.updateInput(event)}>
+                  <option>Estado</option>
                   <option>To Do</option>
                   <option>In Progress</option>
                   <option>Done</option>

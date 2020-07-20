@@ -13,7 +13,7 @@ const currentProfile = Config.currentProfile;
 class App extends Component {
   state = {
     currentView: "tasksPanel",
-    tasks: [],
+    taskRequest: {tasks:[]},
     taskViewTaskCode: null
   }
 
@@ -23,15 +23,15 @@ class App extends Component {
 
   loadTasks = () => {
     axios.get(Config[currentProfile].backendUrl+'tasks').then((response) => {
+      console.log(response.data);
       this.setState({
-        tasks: response.data
+        taskRequest: response.data
       })
     });
   }
 
   updateTasks = (data) => {
-    this.setState({tasks: []});
-    this.setState({tasks: data});
+    this.setState({taskRequest: data});
   }
 
   openOnTaskView = (code) => {
@@ -45,19 +45,28 @@ class App extends Component {
 
   render() {
     let content = null;
-
+    let tasks = null;
+    let noResultsMsg = null;
     if (this.state.currentView === "tasksPanel"){
-      let tasks = this.state.tasks.map((task) => {
-        return (<Task onClick={(code)=>this.openOnTaskView(code)}
-            title={task.title} key={task.code} code={task.code}
-            totalTime={task.totalTime}
-            description={task.description}
-            state={task.state}/>)
-      });
+      if (this.state.taskRequest.results === "SIN_RESULTADOS"){
+        tasks = <div className="noResultsMessage">
+        <span className="noResultsMessageText">
+        No se han encontrado resultados con los criterios de busqueda.</span></div>;
+      }
+      else {
+          tasks = this.state.taskRequest.tasks.map((task) => {
+          return (<Task onClick={(code)=>this.openOnTaskView(code)}
+              title={task.title} key={task.code} code={task.code}
+              totalTime={task.totalTime}
+              description={task.description}
+              state={task.state}/>)
+          });
+      }
 
       content = (
           <div>
             <SearchBar onTaskSearch={this.updateTasks}/>
+            {noResultsMsg}
             <div style={{display:'flex', flexDirection:'row', flexWrap: 'wrap'}}>
             <CreateTask onCreation={()=>this.loadTasks()}/>
               {tasks}
