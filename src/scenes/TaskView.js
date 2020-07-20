@@ -209,7 +209,7 @@ export default class TaskView extends Component {
             onMouseEnter={this.toggleBackImg}
             onMouseLeave={this.toggleBackImg}
             onClick={this.props.onBackRequest()}>
-            <img src={this.state.backImg} height={14} />
+            <img alt="back" src={this.state.backImg} height={14} />
           </div>
           <span style={{fontFamily:'Avenir-Light'}}>Todas las tareas</span>
       </div>

@@ -23,7 +23,6 @@ class App extends Component {
 
   loadTasks = () => {
     axios.get(Config[currentProfile].backendUrl+'tasks').then((response) => {
-      console.log(response.data);
       this.setState({
         taskRequest: response.data
       })
@@ -81,7 +80,6 @@ class App extends Component {
     }
 
 
-    console.log("tasks");
     return (
       <div>
       <TopBar />

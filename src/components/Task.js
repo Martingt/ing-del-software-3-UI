@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Card, CardText, CardBody,
-  CardTitle, Button, Input
+  Card, CardText, CardBody
 } from 'reactstrap';
 import  '../resources/styles/task.css';
 import taskStyle from '../resources/styles/tasks.js';
@@ -62,7 +61,7 @@ class Task extends Component {
                 </div>
                 <div style={{display:'flex' ,flexDirection:'row', justifyContent:'space-between',alignItems:'center'}}>
                   <div>
-                      <img src={clock} height={16} width={16} style={{opacity:0.42,marginRight:5}} />
+                      <img  alt="clock" src={clock} height={16} width={16} style={{opacity:0.42,marginRight:5}} />
                       <span style={{fontFamily:'AvenirNext-Regular',
                           fontSize:'0.7rem',
                           marginRight:5,
@@ -70,9 +69,9 @@ class Task extends Component {
                           justifyContent:'center',
                           display:'inline-block'}}>
                           <span>{
-                          (hours != 0)?
+                          (hours !== 0)?
                             hours + "h " + minutes + "min " + seconds + "s":
-                          (minutes != 0)?
+                          (minutes !== 0)?
                             minutes + "min " + seconds + "s":
                             seconds + "s"
                           }</span>
@@ -83,8 +82,7 @@ class Task extends Component {
                       marginRight:5,
                       color: color,
                       alignItems:'center',
-                      justifyContent:'center',
-                      display:'inline-block'}}>{this.state.state}</div>
+                      justifyContent:'center'}}>{this.state.state}</div>
                 </div>
                 <div>
                   <CardText style={{textAlign:'justify',fontSize:'0.8rem',fontFamily:'AvenirNext-UltraLight',marginTop:10}}>
@@ -93,7 +91,7 @@ class Task extends Component {
                 </div>
             </div>
             <div style={{flex:1, display:'flex', justifyContent:'flex-end', maxHeight:'20px'}}>
-              <img src={edit} height={19} width={19} style={{opacity:0.42}}></img>
+              <img alt="edit" src={edit} height={19} width={19} style={{opacity:0.42}}></img>
             </div>
           </CardBody>
       </Card>)
