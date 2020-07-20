@@ -64,13 +64,21 @@ class CreateTask extends Component {
         taskCreationTried: true
       })
     }).catch(e => {
+      let errorEntries = Object.entries(e.response.data.errors)
+      let i = 0;
+      let resultsList = <div>{
+          errorEntries.map((error) => {i++;
+            return <span key={i}>{error[1]}</span>})
+        }</div>;
+
       this.setState({
-        creationResult: "La tarea no pudo ser creada, intentelo de nuevo mas tarde.",
+        creationResult:resultsList,
         taskCreationTried: true
       })
     });
 
     this.props.onCreation();
+
   }
 
   handleWindowResize(){
@@ -84,20 +92,19 @@ class CreateTask extends Component {
     window.addEventListener("resize", this.handleWindowResize.bind(this));
   }
 
-  taskCreatedConfirmation(){
-    return (<div style={{flex:1, flexDirection:'column'}}>
-      <div style={{flex:1,
-        display:'flex',
-        justifyContent:'flex-end'}}>
-        <CloseButton  onClick={this.cancelTaskCreation}/>
-      </div>
-      <div style={{flex:1,
-        display:'flex',
-        alignItems:'center',
-        justifyContent:'center',
-        flexDirection:'column'}}><span>{this.state.creationResult}</span>
-        <Button onClick={this.cancelTaskCreation}>Aceptar</Button></div>
-    </div>);
+  taskCreationResult(){
+    return <div style={{flex:1, flexDirection:'column', display:'flex',margin:10}}>
+            <div style={{ display:'flex', justifyContent:'flex-end', height:20}}>
+              <CloseButton  onClick={this.cancelTaskCreation}/>
+            </div>
+            <div style={{flex:1,
+              display:'flex',
+              alignItems:'center',
+              justifyContent:'center',
+              flexDirection:'column'}}><span
+              className="ptext">{this.state.creationResult}</span>
+              <div onClick={this.cancelTaskCreation} className='acceptButton'>Aceptar</div></div>
+          </div>;
   }
 
   createTaskFrom(){
@@ -123,7 +130,6 @@ class CreateTask extends Component {
               id="taskTitle"
               placeholder="Descripcion"
               style={{marginTop:10, fontFamily:'AvenirNext-Regular',border: 'none', resize:'none', height:'100%'}} />
-
           </div>
 
           <div  style={{ display:'flex', justifyContent:'center'}}>
@@ -144,7 +150,7 @@ class CreateTask extends Component {
     else if (this.state.taskCreationOpen && this.state.taskCreationTried){
       card = (
         <Card className="task taskCreationCard" style={{...taskStyle.taskCard, cursor:'default'}}>
-        {this.taskCreatedConfirmation()}
+        {this.taskCreationResult()}
         </Card>);
     }
     else {

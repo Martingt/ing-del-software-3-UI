@@ -39,9 +39,16 @@ class Task extends Component {
 
   render(){
 
-    let color = this.state.state == 'To Do'? "#fcc107": this.state.state == 'In Progress'? 'red': 'green';
-    let cardType = this.state.state == 'To Do'? "toDo": this.state.state == 'In Progress'? 'inProgress': 'done';
+    let color = this.state.state === 'To Do'? "#2095ff":
+      this.state.state === 'In Progress'? "#fbc000": 'green';
+    let cardType = this.state.state === 'To Do'? "toDo":
+      this.state.state === 'In Progress'? 'inProgress': 'done';
     let cardStyle = "task " + cardType;
+
+    let hours = Math.floor(this.props.totalTime / 3600);
+    let minutes = Math.floor((this.props.totalTime - hours*3600) / 60);
+    let seconds = Math.floor(this.props.totalTime % 60);
+
     return(
       <Card  onClick={(event)=>this.onCardClick(event)} className={cardStyle} style={{...taskStyle.taskCard}}  >
           <CardBody style={{flex:1, display:'flex', flexDirection:'column', justifyContent:'space-between'}}>
@@ -57,12 +64,18 @@ class Task extends Component {
                   <div>
                       <img src={clock} height={16} width={16} style={{opacity:0.42,marginRight:5}} />
                       <span style={{fontFamily:'AvenirNext-Regular',
-                          fontSize:'0.6rem',
+                          fontSize:'0.7rem',
                           marginRight:5,
                           alignItems:'center',
                           justifyContent:'center',
                           display:'inline-block'}}>
-                          <span>Task {this.props.code}</span>
+                          <span>{
+                          (hours != 0)?
+                            hours + "h " + minutes + "min " + seconds + "s":
+                          (minutes != 0)?
+                            minutes + "min " + seconds + "s":
+                            seconds + "s"
+                          }</span>
                       </span>
                   </div>
                   <div style={{fontFamily:'AvenirNext-Regular', display:'flex',
@@ -74,7 +87,9 @@ class Task extends Component {
                       display:'inline-block'}}>{this.state.state}</div>
                 </div>
                 <div>
-                  <CardText style={{textAlign:'justify',fontSize:'0.8rem',fontFamily:'AvenirNext-UltraLight',marginTop:10}}>{this.state.description}</CardText>
+                  <CardText style={{textAlign:'justify',fontSize:'0.8rem',fontFamily:'AvenirNext-UltraLight',marginTop:10}}>
+                  {this.state.description}
+                  </CardText>
                 </div>
             </div>
             <div style={{flex:1, display:'flex', justifyContent:'flex-end', maxHeight:'20px'}}>

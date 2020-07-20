@@ -50,6 +50,7 @@ class App extends Component {
       let tasks = this.state.tasks.map((task) => {
         return (<Task onClick={(code)=>this.openOnTaskView(code)}
             title={task.title} key={task.code} code={task.code}
+            totalTime={task.totalTime}
             description={task.description}
             state={task.state}/>)
       });

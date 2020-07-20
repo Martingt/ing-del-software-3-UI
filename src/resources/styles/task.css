@@ -28,22 +28,40 @@
 }
 
 .toDo {
+  border-color:#40c5FF;
+}
+.toDo:hover {
+  border-color:#1590FF;
+}
+.inProgress {
   border-color:#fcc107;
 }
-
-.inProgress {
-  border-color:#ff7535;
-}
 .inProgress:hover {
-  border-color:#f00000;
+  border-color:#fca300;
 }
 
 .done {
-  border-color:#00d000;
+  border-color:#00c500;
 }
 .done:hover {
   border-color:#009000;
 }
-.toDo:hover {
-  border-color:#ffa130;
+.acceptButton {
+  font-size:0.9rem;
+  font-family:AvenirNext-Regular;
+  border-radius:3px;
+  padding-left:12px;
+  padding-right:12px;
+  padding-top:6px;
+  padding-bottom:6px;
+  background-color: #d4d4d4;
+  cursor:pointer;
+}
+.acceptButton:hover {
+  background-color:#cbcbcb;
+}
+.ptext {
+  font-size:1rem;
+  font-family:AvenirNext-Regular;
+  margin:10px;
 }

@@ -20,14 +20,12 @@ export default class TaskView extends Component {
         timeIntervals: '',
         backImg: backLight,
         backActive: false,
-        tareaComenzada: false,
         chronometreActive: false,
         hours: 0,
         minutes: 0,
         seconds: 0,
         totalSeconds: 0,
         timerPaused:false,
-        tareaTerminada: false,
         currentTr: -1
     }
   }
@@ -37,12 +35,12 @@ export default class TaskView extends Component {
 
   }
 
-  updateTaskInfo = () =>{
+  updateTaskInfo = () => {
     let baseUrl = Config[currentProfile].backendUrl+'tasks/'+this.props.taskCode;
     axios.get(baseUrl).then((response) => {
       let seconds = Math.floor(response.data.totalTime % 60)
       let hours = Math.floor(response.data.totalTime / 3600)
-      let minutes =  Math.floor(response.data.totalTime / 60)
+      let minutes =  Math.floor((response.data.totalTime - hours*3600) / 60)
       this.setState({...response.data, seconds: seconds, minutes: minutes, hours: hours});
 
       if (response.data.state === 'In Progress' && this.state.currentTr === -1){
@@ -65,14 +63,12 @@ export default class TaskView extends Component {
     let baseUrl = Config[currentProfile].backendUrl+"tasks/" +this.props.taskCode+"/stop";
     let query = "?trcode="+this.state.currentTr;
 
+    clearInterval(this.timer);
     axios.get(baseUrl+query).then((response) => {
         console.log(response);
         this.updateTaskInfo();
     });
-
-
-    this.setState({chronometreActive:false, tareaTerminada:true});
-    clearInterval(this.timer);
+    this.setState({chronometreActive:false});
   }
 
   pauseTimer =() => {
@@ -124,18 +120,19 @@ export default class TaskView extends Component {
     let queryUrl = baseUrl + query;
 
     axios.get(queryUrl).then((response) => {
-        this.setState({currentTr: response.data.tr_code});
+        this.setState({currentTr: response.data.tr_code, state:"In Progress"});
         console.log(response);
     });
 
     this.activateTimer();
   }
 
-  activateTimer = () =>{
-    var hours =0;
+  activateTimer = () => {
+    var hours = 0;
     var minutes = 0;
     var totalSeconds = 0;
-    this.setState({chronometreActive:true, tareaComenzada:true});
+    this.setState({chronometreActive:true});
+
     this.timer = setInterval(()=>{
       totalSeconds = this.state.totalSeconds+1;
       hours = Math.floor(totalSeconds / 3600);
@@ -152,14 +149,14 @@ export default class TaskView extends Component {
     },1000);
   }
 
-  displayChronometer = (taskConrtrols) =>{
+  displayChronometer = () => {
 
     let taskControls = null;
-    if ((this.state.tareaComenzada && this.state.tareaTerminada) || (this.state.state === 'Done')){
+    if (this.state.state === 'Done'){
       taskControls = (<span>Tarea finalizada con exito. </span>);
     }
-    else if ((this.state.tareaComenzada && !this.state.tareaTerminada)||
-          (this.state.state === 'In Progress')){
+
+    else if (this.state.state === 'In Progress'){
       taskControls = (<Button className="cButton"
         onClick={this.endTask}
         style={{minWidth:'124px'}}> Finalizar Tarea</Button>)
@@ -169,8 +166,7 @@ export default class TaskView extends Component {
         onClick={this.startTask} color="success">Comenzar Tarea</Button>)
     }
 
-    return (<div className='chronometre'>
-
+    return (<div className='chronometer'>
       <Col className='timer'>
         <h3 className='tnumber'>{
           (this.state.hours < 10)?
@@ -189,12 +185,11 @@ export default class TaskView extends Component {
 
 
       <Col className='options'>
-      { (this.state.timerPaused || (this.state.state === "In Progress" && this.state.currentTr === -1))?
+      {(this.state.timerPaused || (this.state.state === "In Progress" && this.state.currentTr === -1))?
             (<span
               className={
-                (this.state.timerPaused ||
-                    (this.state.state === "In Progress" && this.state.currentTr === -1))?
-               "cButton" : "disabledButton"}
+                (this.state.state === "In Progress" && (this.state.timerPaused || this.state.currentTr === -1))?
+                "cButton" : "disabledButton"}
               onClick={this.playTimer}>Continuar</span>):
             (<span
               className={(this.state.chronometreActive)? "cButton" : "disabledButton"}
@@ -205,8 +200,8 @@ export default class TaskView extends Component {
   }
 
   render(){
-    let color = (this.state.state === 'To Do')? "#fcc107":
-                (this.state.state === 'In Progress')? "#f06535":"green"
+    let color = this.state.state === 'To Do'? "#2095ff":
+      this.state.state === 'In Progress'? "#fbc000": 'green';
 
     return (<div>
       <div className="titleContent">
