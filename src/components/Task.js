@@ -38,10 +38,10 @@ class Task extends Component {
 
   render(){
 
-    let color = this.state.state === 'To Do'? "#2095ff":
-      this.state.state === 'In Progress'? "#fbc000": 'green';
-    let cardType = this.state.state === 'To Do'? "toDo":
-      this.state.state === 'In Progress'? 'inProgress': 'done';
+    let color = this.props.state === 'To Do'? "#2095ff":
+      this.props.state === 'In Progress'? "#fbc000": 'green';
+    let cardType = this.props.state === 'To Do'? "toDo":
+      this.props.state === 'In Progress'? 'inProgress': 'done';
     let cardStyle = "task " + cardType;
 
     let hours = Math.floor(this.props.totalTime / 3600);
@@ -54,9 +54,9 @@ class Task extends Component {
               <div style={{flex:1, display:'flex', flexDirection:'column'}}>
                 <div style={{ paddingTop:5, paddingBottom:10 }}>
                   <CardText style={{fontSize:'1.1rem',fontFamily:'AvenirNext-Regular'}}>{
-                    (this.state.title.length > 50)?
-                    this.state.title.slice(0,50) + "...":
-                    this.state.title
+                    (this.props.title.length > 50)?
+                    this.props.title.slice(0,50) + "...":
+                    this.props.title
                   }</CardText>
                 </div>
                 <div style={{display:'flex' ,flexDirection:'row', justifyContent:'space-between',alignItems:'center'}}>
@@ -82,11 +82,11 @@ class Task extends Component {
                       marginRight:5,
                       color: color,
                       alignItems:'center',
-                      justifyContent:'center'}}>{this.state.state}</div>
+                      justifyContent:'center'}}>{this.props.state}</div>
                 </div>
                 <div>
                   <CardText style={{textAlign:'justify',fontSize:'0.8rem',fontFamily:'AvenirNext-UltraLight',marginTop:10}}>
-                  {this.state.description}
+                  {this.props.description}
                   </CardText>
                 </div>
             </div>

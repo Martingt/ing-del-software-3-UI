@@ -14,7 +14,8 @@ class App extends Component {
   state = {
     currentView: "tasksPanel",
     taskRequest: {tasks:[]},
-    taskViewTaskCode: null
+    taskViewTaskCode: null,
+    tasksUpdated:false
   }
 
   componentDidMount() {
@@ -30,7 +31,7 @@ class App extends Component {
   }
 
   updateTasks = (data) => {
-    this.setState({taskRequest: data});
+    this.setState({taskRequest: data, tasksUpdated: true});
   }
 
   openOnTaskView = (code) => {
@@ -47,12 +48,12 @@ class App extends Component {
     let tasks = null;
     let noResultsMsg = null;
     if (this.state.currentView === "tasksPanel"){
-      if (this.state.taskRequest.results === "SIN_RESULTADOS"){
+      if (this.state.taskRequest.results === "SIN_RESULTADOS" && this.state.tasksUpdated){
         tasks = <div className="noResultsMessage">
         <span className="noResultsMessageText">
         No se han encontrado resultados con los criterios de busqueda.</span></div>;
       }
-      else {
+      else if(this.state.taskRequest.results !== "SIN_RESULTADOS"){
           tasks = this.state.taskRequest.tasks.map((task) => {
           return (<Task onClick={(code)=>this.openOnTaskView(code)}
               title={task.title} key={task.code} code={task.code}

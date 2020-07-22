@@ -41,14 +41,19 @@ export default class TaskView extends Component {
       let seconds = Math.floor(response.data.totalTime % 60)
       let hours = Math.floor(response.data.totalTime / 3600)
       let minutes =  Math.floor((response.data.totalTime - hours*3600) / 60)
-      this.setState({...response.data, seconds: seconds, minutes: minutes, hours: hours});
+      this.setState({...response.data, totalSeconds: response.data.totalTime,
+        seconds: seconds, minutes: minutes,
+        hours: hours,currentTr:response.data.ongoingRecordCode});
 
       if (response.data.state === 'In Progress' && this.state.currentTr === -1){
         this.setState({chronometreActive:true});
       }
+      else if (response.data.state === 'In Progress' && this.state.currentTr !== -1){
+        this.activateTimer();
+        this.setState({chronometreActive:true,timerPaused: false});
+      }
     });
   }
-
 
   toggleBackImg = () =>{
     if (this.state.backActive){
@@ -133,7 +138,7 @@ export default class TaskView extends Component {
     var totalSeconds = 0;
     this.setState({chronometreActive:true});
 
-    this.timer = setInterval(()=>{
+    this.timer = setInterval(()=> {
       totalSeconds = this.state.totalSeconds+1;
       hours = Math.floor(totalSeconds / 3600);
       minutes = Math.floor(totalSeconds / 60);
@@ -146,7 +151,7 @@ export default class TaskView extends Component {
       this.setState({totalSeconds: totalSeconds,
         hours:hours, minutes:minutes});
 
-    },1000);
+    }, 1000);
   }
 
   displayChronometer = () => {
