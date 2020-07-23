@@ -30,8 +30,6 @@ class Task extends Component {
   }
 
   activateTimer = () => {
-    var hours = 0;
-    var minutes = 0;
     var totalSeconds = 0;
     this.setState({chronometreActive:true});
 

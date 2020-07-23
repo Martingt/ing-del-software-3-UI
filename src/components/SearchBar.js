@@ -31,7 +31,7 @@ export default class SearchBar extends Component {
     let baseUrl = Config[currentProfile].backendUrl+'tasks';
     let query = "?title=" + state.title + "&description=" +  state.description
             + "&code=" +  state.code;
-    if(this.state.state !== "Estado") query = query + "&state=" + this.state.state;
+    if(state.state !== "Estado") query = query + "&state=" + state.state;
     let queryUrl = baseUrl + query;
     axios.get(queryUrl).then((response) => {
         this.props.onTaskSearch(response.data);
@@ -62,18 +62,11 @@ export default class SearchBar extends Component {
           (this.state.searchActive)?
           (<div >
             <Row>
-              <Col>
+              <Col style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                <Input className="searchInput titleInput"
                 type="text" name="title" id="titleSearch"
                 placeholder="Buscar por titulo"
-                onChange={(event)=>this.updateInput(event)} /></Col>
-               <Col style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-                 <Input className="searchInput idInput"
-                  type="text" name="code" id="idSearch"
-                  placeholder="Buscar por id de tarea"
-                  onChange={(event)=>this.updateInput(event)}
-                  />
-
+                onChange={(event)=>this.updateInput(event)} />
                   <Input type='select' name='state'
                       className='searchInput stateSelector'
                       onChange={(event)=>this.updateInput(event)}>
