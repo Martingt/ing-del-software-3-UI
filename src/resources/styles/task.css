@@ -65,3 +65,16 @@
   font-family:AvenirNext-Regular;
   margin:10px;
 }
+.noStyleLink {
+  color:inherit;
+
+}
+.noStyleLink:active {
+  text-decoration:none;
+  color:inherit;
+}
+
+.noStyleLink:hover {
+  text-decoration:none;
+  color:inherit;
+}

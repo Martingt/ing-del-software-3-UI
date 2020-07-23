@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   Card, CardText, CardBody
 } from 'reactstrap';
+import { Link } from "react-router-dom";
 import  '../resources/styles/task.css';
 import taskStyle from '../resources/styles/tasks.js';
 import clock from '../resources/images/clock.png';
@@ -9,32 +10,37 @@ import edit from '../resources/images/edit.png';
 class Task extends Component {
 
   constructor(props){
-    super();
+    super(props);
     this.state = {
-      title: props.title,
-      description: props.description,
-      state: props.state,
-      totalTime: props.totalTime,
-      winWidth: window.innerWidth,
-      winHeight: window.innerHeight
+      totalSeconds: props.totalTime
     }
   }
 
-  onCardClick(event){
-    this.props.onClick(this.props.code);
+
+  componentDidMount(){
+    if (this.props.ongoing){
+      this.activateTimer();
+    }
   }
 
-  handleWindowResize(){
-    this.setState({
-      winWidth: window.innerWidth,
-      winHeight: window.innerheight});
+  componentDidUpdate(prevProps) {
+    if (this.props.ongoing !== prevProps.ongoing) {
+      this.activateTimer();
+    }
   }
 
-  componentDidMount() {
-    this.handleWindowResize();
-    window.addEventListener("resize", this.handleWindowResize.bind(this));
-  }
+  activateTimer = () => {
+    var hours = 0;
+    var minutes = 0;
+    var totalSeconds = 0;
+    this.setState({chronometreActive:true});
 
+    this.timer = setInterval(()=> {
+      totalSeconds = this.state.totalSeconds+1;
+      this.setState({totalSeconds: totalSeconds});
+
+    }, 1000);
+  }
 
   render(){
 
@@ -44,12 +50,13 @@ class Task extends Component {
       this.props.state === 'In Progress'? 'inProgress': 'done';
     let cardStyle = "task " + cardType;
 
-    let hours = Math.floor(this.props.totalTime / 3600);
-    let minutes = Math.floor((this.props.totalTime - hours*3600) / 60);
-    let seconds = Math.floor(this.props.totalTime % 60);
+    let hours = Math.floor(this.state.totalSeconds / 3600);
+    let minutes = Math.floor((this.state.totalSeconds - hours*3600) / 60);
+    let seconds = Math.floor(this.state.totalSeconds % 60);
 
     return(
-      <Card  onClick={(event)=>this.onCardClick(event)} className={cardStyle} style={{...taskStyle.taskCard}}  >
+      <Link to={this.props.onClickGoTo} className="noStyleLink" >
+        <Card className={cardStyle} style={{...taskStyle.taskCard}}  >
           <CardBody style={{flex:1, display:'flex', flexDirection:'column', justifyContent:'space-between'}}>
               <div style={{flex:1, display:'flex', flexDirection:'column'}}>
                 <div style={{ paddingTop:5, paddingBottom:10 }}>
@@ -94,8 +101,8 @@ class Task extends Component {
               <img alt="edit" src={edit} height={19} width={19} style={{opacity:0.42}}></img>
             </div>
           </CardBody>
-      </Card>)
-
+          </Card>
+        </Link>)
   }
 }
 

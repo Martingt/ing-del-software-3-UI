@@ -6,9 +6,10 @@ import '../resources/styles/chronometre.css';
 import back from '../resources/images/back.png';
 import backLight from '../resources/images/back-light.png';
 import {Button, Col} from 'reactstrap';
+import { Link, withRouter } from "react-router-dom";
 const currentProfile = Config.currentProfile;
 
-export default class TaskView extends Component {
+class TaskView extends Component {
   constructor(props){
     super(props);
 
@@ -36,7 +37,7 @@ export default class TaskView extends Component {
   }
 
   updateTaskInfo = () => {
-    let baseUrl = Config[currentProfile].backendUrl+'tasks/'+this.props.taskCode;
+    let baseUrl = Config[currentProfile].backendUrl+'tasks/'+this.props.match.params.taskCode;
     axios.get(baseUrl).then((response) => {
       let seconds = Math.floor(response.data.totalTime % 60)
       let hours = Math.floor(response.data.totalTime / 3600)
@@ -65,7 +66,7 @@ export default class TaskView extends Component {
   }
 
   endTask = () => {
-    let baseUrl = Config[currentProfile].backendUrl+"tasks/" +this.props.taskCode+"/stop";
+    let baseUrl = Config[currentProfile].backendUrl+"tasks/" +this.props.match.params.taskCode+"/stop";
     let query = "?trcode="+this.state.currentTr;
 
     clearInterval(this.timer);
@@ -78,7 +79,7 @@ export default class TaskView extends Component {
 
   pauseTimer =() => {
     if(this.state.chronometreActive){
-      let baseUrl = Config[currentProfile].backendUrl+"tasks/" +this.props.taskCode+"/pause";
+      let baseUrl = Config[currentProfile].backendUrl+"tasks/" +this.props.match.params.taskCode+"/pause";
       let query = "?trcode="+this.state.currentTr;
 
       axios.get(baseUrl+query).then((response) => {
@@ -91,7 +92,7 @@ export default class TaskView extends Component {
     }
   }
 
-  playTimer = () =>{
+  playTimer = () => {
 
     if(this.state.chronometreActive ){
       let today = new Date();
@@ -99,7 +100,7 @@ export default class TaskView extends Component {
       let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
       let yyyy = today.getFullYear();
 
-      let baseUrl = Config[currentProfile].backendUrl+"tasks/" +this.props.taskCode+"/resume";
+      let baseUrl = Config[currentProfile].backendUrl+"tasks/" +this.props.match.params.taskCode+"/resume";
       let query = "?day="+dd+"&month="+mm+"&year="+yyyy;
 
       let queryUrl = baseUrl + query;
@@ -119,7 +120,7 @@ export default class TaskView extends Component {
     let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     let yyyy = today.getFullYear();
 
-    let baseUrl = Config[currentProfile].backendUrl+"tasks/" +this.props.taskCode+"/start";
+    let baseUrl = Config[currentProfile].backendUrl+"tasks/" +this.props.match.params.taskCode+"/start";
     let query = "?day="+dd+"&month="+mm+"&year="+yyyy;
 
     let queryUrl = baseUrl + query;
@@ -212,9 +213,10 @@ export default class TaskView extends Component {
       <div className="titleContent">
           <div className="backButton"
             onMouseEnter={this.toggleBackImg}
-            onMouseLeave={this.toggleBackImg}
-            onClick={this.props.onBackRequest()}>
-            <img alt="back" src={this.state.backImg} height={14} />
+            onMouseLeave={this.toggleBackImg}>
+            <Link className="noStyleLink" to="/" >
+              <img alt="back" src={this.state.backImg} height={14} />
+            </Link>
           </div>
           <span style={{fontFamily:'Avenir-Light'}}>Todas las tareas</span>
       </div>
@@ -244,3 +246,5 @@ export default class TaskView extends Component {
   }
 
 }
+
+export default withRouter(TaskView);
