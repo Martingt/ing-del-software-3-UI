@@ -71,7 +71,7 @@ export default class SearchBar extends Component {
               searchDropdownImage : searchDropdownImageLight}
 
           height={13} />
-        <span className="linkTitle" style={{marginLeft:5}}>Filtrar tareas por titulo, descripcion o estado</span></span>
+        <span className="linkTitle" style={{marginLeft:5}}>Filtrar tareas por título, descripción o estado</span></span>
         {
           (this.state.searchActive)?
           (<div style={{marginTop:'8px'}}>
