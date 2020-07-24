@@ -34,11 +34,6 @@ export default class TaskList extends Component {
     this.setState({taskRequest: data, tasksUpdated: true});
   }
 
-  goToTasks = () => {
-    this.loadTasks();
-    this.setState({currentView:"tasksPanel"});
-  }
-
   render() {
 
     let tasks = null;

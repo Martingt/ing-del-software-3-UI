@@ -4,10 +4,12 @@
   border-bottom:1px solid #f8f8f8;
 }
 .searchBarTitle {
-  cursor:pointer
+  cursor:pointer;
+  display:inline-block;
 }
 .searchInput {
-  margin-top:5px
+  margin-top:5px;
+  font-family:AvenirNext-Regular;
 }
 
 .titleInput {
@@ -31,4 +33,8 @@
   align-items: center;
 }
 .noResultsMessageText {
+}
+.linkTitle {
+  font-family:AvenirNext-Regular;
+  font-size:1rem;
 }
