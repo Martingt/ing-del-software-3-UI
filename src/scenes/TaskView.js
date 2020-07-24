@@ -209,6 +209,19 @@ class TaskView extends Component {
     let color = this.state.state === 'To Do'? "#2095ff":
       this.state.state === 'In Progress'? "#fbc000": 'green';
 
+    let totalHours = Math.floor(this.state.totalTime / 3600);
+    let totalMinutes = Math.floor((this.state.totalTime - totalHours * 3600)/60);
+    let totalSeconds = Math.floor(this.state.totalTime % 60);
+
+    let workingHours = Math.floor(this.state.workingTime / 3600);
+    let workingMinutes = Math.floor((this.state.workingTime - workingHours * 3600)/60);
+    let workingSeconds = Math.floor(this.state.workingTime % 60);
+
+    let restTime = this.state.totalTime - this.state.workingTime;
+    let restingHours = Math.floor(restTime / 3600);
+    let restingMinutes = Math.floor((restTime - restingHours * 3600)/60);
+    let restingSeconds = Math.floor(restTime % 60);
+
     return (<div>
       <div className="titleContent">
           <div className="backButton"
@@ -236,11 +249,30 @@ class TaskView extends Component {
         <h5>Descripcion</h5>
         <span>{this.state.description}</span>
 
+        <div style={{marginTop:'10px'}}>
         <h5>Tiempo</h5>
-        <div>Tiempo total: {Math.round(this.state.totalTime)} segundos. </div>
-        <div>Tiempo de trabajo total: {Math.round(this.state.workingTime)} segundos. </div>
-        <div>Tiempo de descanso total: {Math.round(this.state.totalTime-this.state.workingTime)} segundos. </div>
-
+        <div>Tiempo total:
+          <span style={{marginLeft:'5px'}}>
+            {(totalHours !== 0)? ' ' + totalHours + 'hs. ' : null}
+            {(totalMinutes !== 0)? totalMinutes + ' min. ' : null}
+            {totalSeconds} seg.
+          </span>
+        </div>
+        <div>Tiempo de trabajo total:
+          <span style={{marginLeft:'5px'}}>
+            {(workingHours !== 0)? ' ' + workingHours + 'hs. ' : null}
+            {(workingMinutes !== 0)? workingMinutes + ' min. ' : null}
+            {workingSeconds} seg.
+          </span>
+        </div>
+        <div>Tiempo de descanso total:
+          <span style={{marginLeft:'5px'}}>
+            {(restingHours !== 0)? ' ' + restingHours + 'hs. ' : null}
+            {(restingMinutes !== 0)? restingMinutes + ' min. ' : null}
+            {restingSeconds} seg.
+          </span>
+        </div>
+        </div>
       </div>
     </div>);
   }
