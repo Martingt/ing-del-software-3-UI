@@ -27,7 +27,9 @@ class TaskView extends Component {
         seconds: 0,
         totalSeconds: 0,
         timerPaused:false,
-        currentTr: -1
+        currentTr: -1,
+        totalTime:0,
+        workingTime:0
     }
   }
 
