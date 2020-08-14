@@ -62,7 +62,9 @@ class CreateTask extends Component {
       this.setState({
         creationResult: "La tarea se ha creado con exito :)",
         taskCreationTried: true
-      })
+      });
+      
+      this.props.onCreation();
     }).catch(e => {
       let errorEntries = Object.entries(e.response.data.errors)
       let i = 0;
@@ -76,8 +78,6 @@ class CreateTask extends Component {
         taskCreationTried: true
       })
     });
-
-    this.props.onCreation();
 
   }
 

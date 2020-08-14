@@ -218,6 +218,7 @@ class TaskView extends Component {
     let workingSeconds = Math.floor(this.state.workingTime % 60);
 
     let restTime = this.state.totalTime - this.state.workingTime;
+    if (restTime < 0) restTime = 0;
     let restingHours = Math.floor(restTime / 3600);
     let restingMinutes = Math.floor((restTime - restingHours * 3600)/60);
     let restingSeconds = Math.floor(restTime % 60);

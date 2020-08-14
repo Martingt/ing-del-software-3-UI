@@ -22,7 +22,8 @@ class Task extends Component {
       taskForm: {
         title: props.title,
         description: props.description,
-      }
+      },
+      editionOpacity: 0.42
     }
   }
 
@@ -37,6 +38,12 @@ class Task extends Component {
     if (this.props.ongoing !== prevProps.ongoing) {
       this.activateTimer();
     }
+  }
+  handleEditionMouseEnter = () => {
+    this.setState({editionOpacity:0.9});
+  }
+  handleEditionMouseLeave = () => {
+    this.setState({editionOpacity:0.42});
   }
 
   activateTimer = () => {
@@ -59,7 +66,7 @@ class Task extends Component {
   }
 
   toggleTaskEdition = () =>{
-    this.setState({taskEditionTried: !this.state.taskEditionTried});
+    this.setState({taskEditionTried: !this.state.taskEditionTried, editionOpacity: 0.42});
   }
 
   cancelTaskCreation = () => {
@@ -83,7 +90,7 @@ class Task extends Component {
             errorEntries.map((error) => {i++;
               return <span key={i}>{error[1]}</span>})
           }</div>;
-  
+
         this.setState({
           taskEditionTried: false
         })
@@ -142,7 +149,7 @@ class Task extends Component {
       card = (
         <Card className={cardStyle} style={{...taskStyle.taskCard}}  >
           <CardBody style={{flex:1, display:'flex', flexDirection:'column', justifyContent:'space-between'}}>
-            <Link to={this.props.onClickGoTo} className="noStyleLink" >
+            <Link to={this.props.onClickGoTo} style={{display:"flex", flex:1}} className="noStyleLink" >
               <div style={{flex:1, display:'flex', flexDirection:'column'}}>
                 <div style={{ paddingTop:5, paddingBottom:10 }}>
                   <CardText style={{fontSize:'1.1rem',fontFamily:'AvenirNext-Regular'}}>{
@@ -184,7 +191,13 @@ class Task extends Component {
             </div>
             </Link>
             <div onClick={this.toggleTaskEdition} style={{flex:1, display:'flex', justifyContent:'flex-end', maxHeight:'20px'}}>
-              <img alt="edit" src={edit} height={19} width={19} style={{opacity:0.42}}></img>
+              <img alt="edit"
+              onMouseEnter = {this.handleEditionMouseEnter}
+              onMouseLeave = {this.handleEditionMouseLeave}
+              src={edit}
+              height={19}
+              width={19}
+              style={{opacity:this.state.editionOpacity}}></img>
             </div>
           </CardBody>
           </Card>);

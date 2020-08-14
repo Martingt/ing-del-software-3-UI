@@ -19,11 +19,8 @@ export default class TaskList extends Component {
   }
 
   componentDidMount() {
-    this.timer = setInterval(()=> this.loadTasks(), 1000);
-  }
-  componentWillMount(){
-    clearInterval(this.timer)
-    this.timer = null;
+    //this.timer = setInterval(()=> this.loadTasks(), 1000);
+    this.loadTasks();
   }
 
   loadTasks = () => {
@@ -35,10 +32,10 @@ export default class TaskList extends Component {
   }
 
   updateTasks = (data) => {
-    clearInterval(this.timer)
-    this.timer = null;
+    /*clearInterval(this.timer)
+    this.timer = null;*/
     this.setState({taskRequest: data, tasksUpdated: true});
-    
+
   }
 
   render() {
