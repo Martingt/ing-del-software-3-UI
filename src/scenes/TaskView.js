@@ -15,9 +15,9 @@ class TaskView extends Component {
 
     this.state = {
         code: '',
-        description: 'Sample description',
-        title: 'Sample Title',
-        state: 'Sample State',
+        description: 'loading...',
+        title: '',
+        state: 'loading...',
         timeIntervals: '',
         backImg: backLight,
         backActive: false,
